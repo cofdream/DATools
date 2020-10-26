@@ -1,5 +1,5 @@
 ﻿
-namespace DevilAngel.EditorTool
+namespace DATools
 {
     public static class Utils
     {
