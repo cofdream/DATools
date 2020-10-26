@@ -4,6 +4,7 @@
   "displayName": "DATools",
   "description": "This is an DATools package",
   "unity": "2019.1",
+  "dependencies":{
  },
  "keywords": [
     "tool",
