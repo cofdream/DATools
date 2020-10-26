@@ -2,24 +2,27 @@
 using UnityEditor;
 using System;
 
-public static class ScriptableObjectExpand
+namespace DATools
 {
-    public static ScriptableObject CreateInstanceOnly(Type type)
+    public static class ScriptableObjectExpand
     {
-        var objs = Resources.FindObjectsOfTypeAll(type);
-        if (objs != null)
+        public static ScriptableObject CreateInstanceOnly(Type type)
         {
-            if (objs.Length != 0)
+            var objs = Resources.FindObjectsOfTypeAll(type);
+            if (objs != null)
             {
-                if (objs.Length > 1)
-                    Debug.LogWarning("Exist multiple instatnce!");
-                return objs[0] as EditorWindow;
+                if (objs.Length != 0)
+                {
+                    if (objs.Length > 1)
+                        Debug.LogWarning("Exist multiple instatnce!");
+                    return objs[0] as EditorWindow;
+                }
             }
+            return ScriptableObject.CreateInstance(type);
         }
-        return ScriptableObject.CreateInstance(type);
-    }
-    public static T CreateInstanceOnly<T>() where T : ScriptableObject
-    {
-        return (T)CreateInstanceOnly(typeof(T));
-    }
+        public static T CreateInstanceOnly<T>() where T : ScriptableObject
+        {
+            return (T)CreateInstanceOnly(typeof(T));
+        }
+    } 
 }

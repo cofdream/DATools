@@ -5,7 +5,7 @@ using UnityEditor.ProjectWindowCallback;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DevilAngel.EditorTool
+namespace DATools
 {
     internal class CreatCSharpScript
     {
