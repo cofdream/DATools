@@ -22,7 +22,7 @@ namespace DATools
             "\n\t}" +
             "\n}";
 
-        [MenuItem("Assets/Create/C# Script/New Class", false, 81)]
+        [MenuItem("Assets/Create/C# Scripts/New Class", false, 81)]
         private static void CreatNewClass()
         {
             string pathName = Utils.GetSelectionPath()[0] + "/" + DEFINE_CLASS_NAME;
@@ -49,7 +49,7 @@ namespace DATools
             "\n\t}" +
             "\n}";
 
-        [MenuItem("Assets/Create/C# Script/New Editor", false, 81)]
+        [MenuItem("Assets/Create/C# Scripts/New Editor", false, 81)]
         private static void CreateEditor()
         {
             string pathName = Utils.GetSelectionPath()[0] + "/" + DEFINE_EDITOR_NAME;
