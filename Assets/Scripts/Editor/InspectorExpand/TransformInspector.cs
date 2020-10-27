@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace DevilAngel.EditorTool
+namespace DATools
 {
     [CustomEditor(typeof(Transform), true), CanEditMultipleObjects]
     public class TransformInspector : Editor

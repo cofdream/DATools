@@ -10,6 +10,17 @@ namespace DATools
     {
         private static UnityEngine.Object mainWindow = null;
 
+        public static T GetWindowInCenter<T>() where T : EditorWindow
+        {
+            return GetWindowInCenter<T>(new Vector2(600, 300));
+        }
+        public static T GetWindowInCenter<T>(Vector2 size) where T : EditorWindow
+        {
+            var window = EditorWindow.GetWindow<T>();
+            window.position = GetMainWindowCenteredPosition(size);
+            return window;
+        }
+
         public static Rect GetMainWindowCenteredPosition(Vector2 size)
         {
             Rect parentWindowPosition = GetMainWindowPositon();
@@ -63,5 +74,6 @@ namespace DATools
         {
             return TypeCache.GetTypesDerivedFrom(aType).ToArray();
         }
+
     }
 }

@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace DevilAngel.EditorTool
+namespace DATools
 {
     [CustomEditor(typeof(RectTransform), true), CanEditMultipleObjects]
     public class RectTransformInspector : Editor
