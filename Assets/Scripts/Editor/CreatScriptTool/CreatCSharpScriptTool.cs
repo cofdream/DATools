@@ -96,7 +96,6 @@ namespace DATools
 
             private string IsClassOrInterface(string script, string scriptName)
             {
-
                 if (scriptName.StartsWith("I"))
                 {
                     if (scriptName.Length > 2)
