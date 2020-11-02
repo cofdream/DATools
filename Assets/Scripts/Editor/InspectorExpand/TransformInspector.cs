@@ -47,6 +47,8 @@ namespace DATools
             serializedPropertyPosition = m_serializedObject.FindProperty("addPosition");
             serializedPropertyRotation = m_serializedObject.FindProperty("addRotation");
             serializedPropertyScale = m_serializedObject.FindProperty("addScale");
+
+            Debug.Log("Test");
         }
         private void OnDisable()
         {
