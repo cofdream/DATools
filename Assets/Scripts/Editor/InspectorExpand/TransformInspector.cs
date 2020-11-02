@@ -16,7 +16,7 @@ namespace DATools
         private bool isOpenAddWindow;
 
         #region 增量面板
-        private static TransformExpand tranExpand;//自定义数据类，不使用基类的SerializedObject。
+        private static Expand expand;//自定义数据类，不使用基类的SerializedObject。
 
         private SerializedObject m_serializedObject;
 
@@ -31,41 +31,42 @@ namespace DATools
 
         public void OnEnable()
         {
-            var objs = Resources.FindObjectsOfTypeAll<TransformExpand>();
+            defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.TransformInspector, UnityEditor"));
+
+            var objs = Resources.FindObjectsOfTypeAll<Expand>();
             if (objs.Length != 0)
             {
-                tranExpand = objs[0];
+                expand = objs[0];
             }
             else
             {
-                tranExpand = ScriptableObject.CreateInstance<TransformExpand>();
+                expand = ScriptableObject.CreateInstance<Expand>();
             }
 
-            m_serializedObject = new SerializedObject(tranExpand);
-
-            defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.TransformInspector, UnityEditor"));
-
+            m_serializedObject = new SerializedObject(expand);
             serializedPropertyPosition = m_serializedObject.FindProperty("addPosition");
-
             serializedPropertyRotation = m_serializedObject.FindProperty("addRotation");
-
             serializedPropertyScale = m_serializedObject.FindProperty("addScale");
         }
         private void OnDisable()
         {
-            MethodInfo disableMethod = defaultEditor.GetType().GetMethod("OnDisable", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            MethodInfo method = defaultEditor.GetType().GetMethod("OnDisable", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (method != null)
+                method.Invoke(defaultEditor, null);
+        }
+        private void OnDestroy()
+        {
+            MethodInfo method = defaultEditor.GetType().GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (method != null)
+                method.Invoke(defaultEditor, null);
 
-            if (disableMethod != null)
-                disableMethod.Invoke(defaultEditor, null);
-
-            DestroyImmediate(defaultEditor);
+            Dispose();
         }
         public override void OnInspectorGUI()
         {
             defaultEditor.OnInspectorGUI();
 
             DrawOnInspectorGUI();
-
         }
 
         private void DrawOnInspectorGUI()
@@ -109,7 +110,7 @@ namespace DATools
 
                     if (GUILayout.Button("重置"))
                     {
-                        tranExpand.addPosition = Vector3.zero;
+                        expand.addPosition = Vector3.zero;
                     }
 
                     GUILayout.EndHorizontal();
@@ -125,7 +126,7 @@ namespace DATools
 
                     if (GUILayout.Button("重置"))
                     {
-                        tranExpand.addRotation = Vector3.zero;
+                        expand.addRotation = Vector3.zero;
                     }
 
                     GUILayout.EndHorizontal();
@@ -141,7 +142,7 @@ namespace DATools
 
                     if (GUILayout.Button("重置"))
                     {
-                        tranExpand.addScale = Vector3.zero;
+                        expand.addScale = Vector3.zero;
                     }
 
                     GUILayout.EndHorizontal();
@@ -184,16 +185,28 @@ namespace DATools
                 if (isStartAdd)
                 {
                     Undo.RecordObject(transform, "Add Change Transform Values");
-                    transform.localPosition += tranExpand.addPosition;
-                    transform.localEulerAngles += tranExpand.addRotation;
-                    transform.localScale += tranExpand.addScale;
+                    transform.localPosition += expand.addPosition;
+                    transform.localEulerAngles += expand.addRotation;
+                    transform.localScale += expand.addScale;
                 }
             }
         }
 
 
+        private void Dispose()
+        {
+            DestroyImmediate(defaultEditor);
+            defaultEditor = null;
 
-        private class TransformExpand : ScriptableObject
+            expand = null;
+
+            m_serializedObject = null;
+            serializedPropertyPosition = null;
+            serializedPropertyRotation = null;
+            serializedPropertyScale = null;
+        }
+
+        private class Expand : ScriptableObject
         {
             public Vector3 addPosition;
             public Vector3 addRotation;

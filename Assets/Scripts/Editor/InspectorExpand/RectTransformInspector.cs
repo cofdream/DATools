@@ -8,23 +8,24 @@ namespace DATools
     [CustomEditor(typeof(RectTransform), true), CanEditMultipleObjects]
     public class RectTransformInspector : Editor
     {
+        #region GUIContent
         private readonly GUIContent contentAnchoredPostion = new GUIContent(" AP ", (Texture)null, "当前物体的锚点坐标归0");
         private readonly GUIContent contentPosition = new GUIContent(" P ", (Texture)null, "当前物体的本地坐标归0");
         private readonly GUIContent contentRotation = new GUIContent(" R ", (Texture)null, "当前物体的本地旋转归0");
         private readonly GUIContent contentScale = new GUIContent(" S ", (Texture)null, "当前物体的本地缩放归1");
-        private readonly GUIContent contentAddWindow = new GUIContent("增量修改");
+        private readonly GUIContent contentAddWindow = new GUIContent("增量修改"); 
+        #endregion
 
-        bool isOpenAddWindow;
 
         #region 增量面板
-        private static RectTransformExpand rectTranExpand;
+        private static Expand expand;
 
         private SerializedObject m_serializedObject;
-
         private SerializedProperty serializedPropertyPosition;
         private SerializedProperty serializedPropertyRotation;
         private SerializedProperty serializedPropertyScale;
 
+        bool isOpenAddWindow;
         private bool isStartAdd;
         #endregion
 
@@ -32,17 +33,17 @@ namespace DATools
 
         public void OnEnable()
         {
-            var objs = Resources.FindObjectsOfTypeAll<RectTransformExpand>();
+            var objs = Resources.FindObjectsOfTypeAll<Expand>();
             if (objs.Length != 0)
             {
-                rectTranExpand = objs[0];
+                expand = objs[0];
             }
             else
             {
-                rectTranExpand = ScriptableObject.CreateInstance<RectTransformExpand>();
+                expand = ScriptableObject.CreateInstance<Expand>();
             }
 
-            m_serializedObject = new SerializedObject(rectTranExpand);
+            m_serializedObject = new SerializedObject(expand);
 
             defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.RectTransformEditor, UnityEditor"));
 
@@ -61,6 +62,15 @@ namespace DATools
 
             DestroyImmediate(defaultEditor);
         }
+        private void OnDestroy()
+        {
+            MethodInfo method = defaultEditor.GetType().GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (method != null)
+                method.Invoke(defaultEditor, null);
+
+            Dispose();
+        }
+
         public override void OnInspectorGUI()
         {
             defaultEditor.OnInspectorGUI();
@@ -111,7 +121,7 @@ namespace DATools
 
                     if (GUILayout.Button("重置"))
                     {
-                        rectTranExpand.addPosition = Vector3.zero;
+                        expand.addPosition = Vector3.zero;
                     }
 
                     GUILayout.EndHorizontal();
@@ -126,7 +136,7 @@ namespace DATools
 
                     if (GUILayout.Button("重置"))
                     {
-                        rectTranExpand.addRotation = Vector3.zero;
+                        expand.addRotation = Vector3.zero;
                     }
 
                     GUILayout.EndHorizontal();
@@ -142,7 +152,7 @@ namespace DATools
 
                     if (GUILayout.Button("重置"))
                     {
-                        rectTranExpand.addScale = Vector3.zero;
+                        expand.addScale = Vector3.zero;
                     }
 
                     GUILayout.EndHorizontal();
@@ -192,16 +202,28 @@ namespace DATools
                 if (isStartAdd)
                 {
                     Undo.RecordObject(rectTransform, "Add Change Transform Values");
-                    rectTransform.localPosition += rectTranExpand.addPosition;
-                    rectTransform.localEulerAngles += rectTranExpand.addRotation;
-                    rectTransform.localScale += rectTranExpand.addScale;
+                    rectTransform.localPosition += expand.addPosition;
+                    rectTransform.localEulerAngles += expand.addRotation;
+                    rectTransform.localScale += expand.addScale;
                 }
             }
 
         }
 
+        private void Dispose()
+        {
+            DestroyImmediate(defaultEditor);
+            defaultEditor = null;
 
-        private class RectTransformExpand : ScriptableObject
+            expand = null;
+
+            m_serializedObject = null;
+            serializedPropertyPosition = null;
+            serializedPropertyRotation = null;
+            serializedPropertyScale = null;
+        }
+
+        private class Expand : ScriptableObject
         {
             public Vector3 addPosition;
             public Vector3 addRotation;
