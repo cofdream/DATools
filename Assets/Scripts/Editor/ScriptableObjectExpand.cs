@@ -9,14 +9,11 @@ namespace DATools
         public static ScriptableObject CreateInstanceOnly(Type type)
         {
             var objs = Resources.FindObjectsOfTypeAll(type);
-            if (objs != null)
+            if (objs != null && objs.Length != 0)
             {
-                if (objs.Length != 0)
-                {
-                    if (objs.Length > 1)
-                        Debug.LogWarning("Exist multiple instatnce!");
-                    return objs[0] as EditorWindow;
-                }
+                if (objs.Length > 1)
+                    EditorUtility.DisplayDialog("Warring", $"Exist multiple instatnce!,\n type: {type}", "确定");
+                return objs[0] as EditorWindow;
             }
             return ScriptableObject.CreateInstance(type);
         }
@@ -24,5 +21,5 @@ namespace DATools
         {
             return (T)CreateInstanceOnly(typeof(T));
         }
-    } 
+    }
 }

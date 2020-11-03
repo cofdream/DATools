@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace DATools
 {
-    internal class CreatCSharpScript
+    internal class CreateCSharpScript
     {
         #region New Class
         private const string DEFINE_CLASS_NAME = "NewClass";
@@ -28,10 +28,10 @@ namespace DATools
             string pathName = Utils.GetSelectionPath()[0] + "/" + DEFINE_CLASS_NAME;
             Texture2D icon = EditorGUIUtility.IconContent("cs Script Icon").image as Texture2D;
 
-            var creatCSarpScript = ScriptableObjectExpand.CreateInstanceOnly<CreatCSarpScriptAction>();
-            creatCSarpScript.ScriptTemplate = DEFINE_SCRIPT_CLASS;
+            var action = ScriptableObjectExpand.CreateInstanceOnly<CreateCSarpScriptAction>();
+            action.ScriptTemplate = DEFINE_SCRIPT_CLASS;
 
-            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, creatCSarpScript, pathName, icon, string.Empty);
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, action, pathName, icon, string.Empty);
         }
         #endregion
 
@@ -55,15 +55,15 @@ namespace DATools
             string pathName = Utils.GetSelectionPath()[0] + "/" + DEFINE_EDITOR_NAME;
             Texture2D icon = EditorGUIUtility.IconContent("cs Script Icon").image as Texture2D;
 
-            var creatCSarpScript = ScriptableObjectExpand.CreateInstanceOnly<CreatCSarpScriptAction>();
-            creatCSarpScript.ScriptTemplate = DEFINE_SCRIPT_EDITOR;
+            var action = ScriptableObjectExpand.CreateInstanceOnly<CreateCSarpScriptAction>();
+            action.ScriptTemplate = DEFINE_SCRIPT_EDITOR;
 
-            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, creatCSarpScript, pathName, icon, string.Empty);
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, action, pathName, icon, string.Empty);
         }
         #endregion
 
 
-        private class CreatCSarpScriptAction : EndNameEditAction
+        private class CreateCSarpScriptAction : EndNameEditAction
         {
             public string ScriptTemplate;
             public override void Action(int instanceId, string pathName, string resourceFile)
