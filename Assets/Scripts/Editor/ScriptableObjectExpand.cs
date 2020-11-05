@@ -13,7 +13,7 @@ namespace DATools
             {
                 if (objs.Length > 1)
                     EditorUtility.DisplayDialog("Warring", $"Exist multiple instatnce!,\n type: {type}", "确定");
-                return objs[0] as EditorWindow;
+                return objs[0] as ScriptableObject;
             }
             return ScriptableObject.CreateInstance(type);
         }
