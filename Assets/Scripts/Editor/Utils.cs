@@ -63,8 +63,7 @@ namespace DATools
             var p = new System.Diagnostics.Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.Arguments = "/c start " + obj.ToString();
-
-            UnityEngine.Debug.Log(p.StartInfo.Arguments);
+            p.StartInfo.StandardOutputEncoding = System.Text.Encoding.GetEncoding("GB2312");
 
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardInput = true;
@@ -74,6 +73,9 @@ namespace DATools
             p.Start();
 
             p.WaitForExit();
+
+            UnityEngine.Debug.Log(p.StandardOutput.ReadToEnd());
+
             p.Close();
         }
 
