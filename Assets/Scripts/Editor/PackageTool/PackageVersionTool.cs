@@ -45,7 +45,7 @@ namespace DATools
         //}
 
 
-        [MenuItem("Tools/VersionUpdate")]
+        [MenuItem("DATools/VersionUpdate")]
         private static void OpenPackageVersionTool()
         {
             var window = EditorMainWindow.GetWindowInCenter<PackageVersionTool>();

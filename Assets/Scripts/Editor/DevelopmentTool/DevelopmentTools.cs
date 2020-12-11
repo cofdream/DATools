@@ -9,7 +9,7 @@ namespace DATools
         private Vector2 scrollViewPosition;
         private UIDevelopmentToolCell[] developementTools;
 
-        [MenuItem("Tools/DevelopmentTool")]
+        [MenuItem("DATools/DevelopmentTool")]
         public static void OpenWindow()
         {
             GetWindow<DevelopmentTools>().Show();

@@ -13,7 +13,7 @@ namespace TheNext.ArtTools
     /// </summary>
     public sealed class BitmapFontGenerator : EditorWindow
     {
-        [MenuItem("Tools/Font/创建BitmapFont")]
+        [MenuItem("DATools/Font/创建BitmapFont")]
         public static void OpenBitmapFontEditor()
         {
             BitmapFontGenerator win = EditorWindow.GetWindow<BitmapFontGenerator>();
