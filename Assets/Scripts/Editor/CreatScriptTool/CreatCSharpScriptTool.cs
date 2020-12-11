@@ -36,7 +36,7 @@ namespace DATools
         #endregion
 
         #region New Editor
-        private const string DEFINE_EDITOR_NAME = "New Editor";
+        private const string DEFINE_EDITOR_NAME = "NewEditor";
         private const string DEFINE_SCRIPT_EDITOR =
             "using UnityEngine;" +
             "\nusing UnityEditor;" +
