@@ -7,7 +7,7 @@ namespace DATools
         /// 获取Project目录下选中对象的 文件夹 路径
         /// </summary>
         /// <returns></returns>
-        public static string[] GetSelectionPath()
+        public static string[] GetSelectionFoldePath()
         {
             var guids = UnityEditor.Selection.assetGUIDs;
             if (guids == null) return null;
@@ -24,6 +24,23 @@ namespace DATools
             }
             return guids;
         }
+        /// <summary>
+        /// 获取Project目录下选中对象的路径
+        /// </summary>
+        /// <returns></returns>
+        public static string[] GetSelectionPath()
+        {
+            var guids = UnityEditor.Selection.assetGUIDs;
+            if (guids == null) return null;
+
+            for (int i = 0; i < guids.Length; i++)
+            {
+                guids[i] = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[i]);
+            }
+
+            return guids;
+        }
+
 
         public static void OpenDirectory(string path, bool useCMD = true)
         {
