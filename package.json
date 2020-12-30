@@ -1,0 +1,19 @@
+{
+  "name": "com.devilangel.datools",
+  "version": "0.1.1",
+  "displayName": "DATools",
+  "description": "This is an DATools package",
+  "unity": "2019.1",
+  "dependencies":{
+ },
+ "keywords": [
+    "tool",
+    "tools"
+  ],
+  "author": {
+    "name": "DevilAngel",
+    "email": "cofdream@sina.com",
+    "url": "https://github.com/cofdream/DATools.git"
+  },
+ "type": "tool"
+}
