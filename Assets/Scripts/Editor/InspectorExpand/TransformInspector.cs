@@ -31,6 +31,7 @@ namespace DATools
 
         private void OnEnable()
         {
+            // 使用C#的GC去自动管理--- 原生类也是如此
             defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.TransformInspector, UnityEditor"));
 
             var objs = Resources.FindObjectsOfTypeAll<Expand>();
@@ -48,41 +49,12 @@ namespace DATools
             serializedPropertyRotation = m_serializedObject.FindProperty("addRotation");
             serializedPropertyScale = m_serializedObject.FindProperty("addScale");
         }
-        private void OnDisable()
-        {
-            if (defaultEditor != null)
-                DestroyImmediate(defaultEditor);
-
-            defaultEditor = null;
-
-            expand = null;
-
-            m_serializedObject = null;
-            serializedPropertyPosition = null;
-            serializedPropertyRotation = null;
-            serializedPropertyScale = null;
-        }
-        private void OnDestroy()
-        {
-            if (defaultEditor != null)
-                DestroyImmediate(defaultEditor);
-
-            defaultEditor = null;
-
-            expand = null;
-
-            m_serializedObject = null;
-            serializedPropertyPosition = null;
-            serializedPropertyRotation = null;
-            serializedPropertyScale = null;
-        }
         public override void OnInspectorGUI()
         {
             defaultEditor.OnInspectorGUI();
 
             DrawOnInspectorGUI();
         }
-
         private void DrawOnInspectorGUI()
         {
             bool isResetPosition;

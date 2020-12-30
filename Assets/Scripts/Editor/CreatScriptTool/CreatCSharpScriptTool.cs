@@ -43,7 +43,7 @@ namespace DATools
             "\n" +
             "\nnamespace NullNamespace" +
             "\n{" +
-            "\n\tpublic class #ScriptName# :EditorWindow" +
+            "\n\tpublic class #ScriptName# : EditorWindow" +
             "\n\t{" +
             "\n\t\t" +
             "\n\t}" +
