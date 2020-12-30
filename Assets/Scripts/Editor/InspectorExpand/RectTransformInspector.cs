@@ -16,7 +16,6 @@ namespace DATools
         private readonly GUIContent contentAddWindow = new GUIContent("增量修改"); 
         #endregion
 
-
         #region 增量面板
         private static Expand expand;
 
@@ -31,8 +30,10 @@ namespace DATools
 
         private Editor defaultEditor;
 
-        public void OnEnable()
+        private void OnEnable()
         {
+            defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.RectTransformEditor, UnityEditor"));
+
             var objs = Resources.FindObjectsOfTypeAll<Expand>();
             if (objs.Length != 0)
             {
@@ -44,31 +45,35 @@ namespace DATools
             }
 
             m_serializedObject = new SerializedObject(expand);
-
-            defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.RectTransformEditor, UnityEditor"));
-
             serializedPropertyPosition = m_serializedObject.FindProperty("addPosition");
-
             serializedPropertyRotation = m_serializedObject.FindProperty("addRotation");
-
             serializedPropertyScale = m_serializedObject.FindProperty("addScale");
         }
         private void OnDisable()
         {
-            MethodInfo disableMethod = defaultEditor.GetType().GetMethod("OnDisable", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (defaultEditor != null)
+                DestroyImmediate(defaultEditor);
+            defaultEditor = null;
 
-            if (disableMethod != null)
-                disableMethod.Invoke(defaultEditor, null);
+            expand = null;
 
-            DestroyImmediate(defaultEditor);
+            m_serializedObject = null;
+            serializedPropertyPosition = null;
+            serializedPropertyRotation = null;
+            serializedPropertyScale = null;
         }
         private void OnDestroy()
         {
-            MethodInfo method = defaultEditor.GetType().GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (method != null)
-                method.Invoke(defaultEditor, null);
+            if (defaultEditor != null)
+                DestroyImmediate(defaultEditor);
+            defaultEditor = null;
 
-            Dispose();
+            expand = null;
+
+            m_serializedObject = null;
+            serializedPropertyPosition = null;
+            serializedPropertyRotation = null;
+            serializedPropertyScale = null;
         }
 
         public override void OnInspectorGUI()
@@ -210,18 +215,6 @@ namespace DATools
 
         }
 
-        private void Dispose()
-        {
-            DestroyImmediate(defaultEditor);
-            defaultEditor = null;
-
-            expand = null;
-
-            m_serializedObject = null;
-            serializedPropertyPosition = null;
-            serializedPropertyRotation = null;
-            serializedPropertyScale = null;
-        }
 
         private class Expand : ScriptableObject
         {

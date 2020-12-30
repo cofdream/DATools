@@ -13,7 +13,6 @@ namespace DATools
         private readonly GUIContent contentScale = new GUIContent(" S ", (Texture)null, "当前物体的本地缩放归1");
         private readonly GUIContent contentAddWindow = new GUIContent("增量修改");
 
-        private bool isOpenAddWindow;
 
         #region 增量面板
         private static Expand expand;//自定义数据类，不使用基类的SerializedObject。
@@ -24,12 +23,13 @@ namespace DATools
         private SerializedProperty serializedPropertyRotation;
         private SerializedProperty serializedPropertyScale;
 
+        private bool isOpenAddWindow;
         private bool isStartAdd;
         #endregion
 
         private Editor defaultEditor;
 
-        public void OnEnable()
+        private void OnEnable()
         {
             defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.TransformInspector, UnityEditor"));
 
@@ -50,17 +50,31 @@ namespace DATools
         }
         private void OnDisable()
         {
-            MethodInfo method = defaultEditor.GetType().GetMethod("OnDisable", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (method != null)
-                method.Invoke(defaultEditor, null);
+            if (defaultEditor != null)
+                DestroyImmediate(defaultEditor);
+
+            defaultEditor = null;
+
+            expand = null;
+
+            m_serializedObject = null;
+            serializedPropertyPosition = null;
+            serializedPropertyRotation = null;
+            serializedPropertyScale = null;
         }
         private void OnDestroy()
         {
-            MethodInfo method = defaultEditor.GetType().GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (method != null)
-                method.Invoke(defaultEditor, null);
+            if (defaultEditor != null)
+                DestroyImmediate(defaultEditor);
 
-            Dispose();
+            defaultEditor = null;
+
+            expand = null;
+
+            m_serializedObject = null;
+            serializedPropertyPosition = null;
+            serializedPropertyRotation = null;
+            serializedPropertyScale = null;
         }
         public override void OnInspectorGUI()
         {
@@ -190,20 +204,6 @@ namespace DATools
                     transform.localScale += expand.addScale;
                 }
             }
-        }
-
-
-        private void Dispose()
-        {
-            DestroyImmediate(defaultEditor);
-            defaultEditor = null;
-
-            expand = null;
-
-            m_serializedObject = null;
-            serializedPropertyPosition = null;
-            serializedPropertyRotation = null;
-            serializedPropertyScale = null;
         }
 
         private class Expand : ScriptableObject
