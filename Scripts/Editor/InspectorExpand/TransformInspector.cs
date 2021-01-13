@@ -6,7 +6,7 @@ using UnityEngine;
 namespace DATools
 {
     [CustomEditor(typeof(Transform), true), CanEditMultipleObjects]
-    public class TransformInspector : Editor
+    internal sealed class TransformInspector : Editor
     {
         private readonly GUIContent contentPosition = new GUIContent(" P ", (Texture)null, "当前物体的本地坐标归0");
         private readonly GUIContent contentRotation = new GUIContent(" R ", (Texture)null, "当前物体的本地旋转归0");
@@ -29,11 +29,18 @@ namespace DATools
 
         private Editor defaultEditor;
 
+        private static Type type = Type.GetType("UnityEditor.TransformInspector, UnityEditor");
+
+        private void Awake()
+        {
+            if (defaultEditor == null)
+            {
+                defaultEditor = Editor.CreateEditor(targets, type);
+            }
+        }
+
         private void OnEnable()
         {
-            // 使用C#的GC去自动管理--- 原生类也是如此
-            defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.TransformInspector, UnityEditor"));
-
             var objs = Resources.FindObjectsOfTypeAll<Expand>();
             if (objs.Length != 0)
             {
@@ -49,12 +56,19 @@ namespace DATools
             serializedPropertyRotation = m_serializedObject.FindProperty("addRotation");
             serializedPropertyScale = m_serializedObject.FindProperty("addScale");
         }
+
         public override void OnInspectorGUI()
         {
             defaultEditor.OnInspectorGUI();
 
             DrawOnInspectorGUI();
         }
+
+        private void OnDestroy()
+        {
+            DestroyImmediate(defaultEditor);
+        }
+
         private void DrawOnInspectorGUI()
         {
             bool isResetPosition;
@@ -178,7 +192,7 @@ namespace DATools
             }
         }
 
-        private class Expand : ScriptableObject
+        private sealed class Expand : ScriptableObject
         {
             public Vector3 addPosition;
             public Vector3 addRotation;
