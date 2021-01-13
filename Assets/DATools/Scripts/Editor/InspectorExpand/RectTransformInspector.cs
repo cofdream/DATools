@@ -6,14 +6,14 @@ using UnityEngine;
 namespace DATools
 {
     [CustomEditor(typeof(RectTransform), true), CanEditMultipleObjects]
-    public class RectTransformInspector : Editor
+    internal sealed class RectTransformInspector : Editor
     {
         #region GUIContent
         private readonly GUIContent contentAnchoredPostion = new GUIContent(" AP ", (Texture)null, "当前物体的锚点坐标归0");
         private readonly GUIContent contentPosition = new GUIContent(" P ", (Texture)null, "当前物体的本地坐标归0");
         private readonly GUIContent contentRotation = new GUIContent(" R ", (Texture)null, "当前物体的本地旋转归0");
         private readonly GUIContent contentScale = new GUIContent(" S ", (Texture)null, "当前物体的本地缩放归1");
-        private readonly GUIContent contentAddWindow = new GUIContent("增量修改"); 
+        private readonly GUIContent contentAddWindow = new GUIContent("增量修改");
         #endregion
 
         #region 增量面板
@@ -30,10 +30,18 @@ namespace DATools
 
         private Editor defaultEditor;
 
+        private static Type type = Type.GetType("UnityEditor.RectTransformEditor, UnityEditor");
+
+        private void Awake()
+        {
+            if (defaultEditor == null)
+            {
+                defaultEditor = Editor.CreateEditor(targets, type);
+            }
+        }
+
         private void OnEnable()
         {
-            defaultEditor = Editor.CreateEditor(targets, Type.GetType("UnityEditor.RectTransformEditor, UnityEditor"));
-
             var objs = Resources.FindObjectsOfTypeAll<Expand>();
             if (objs.Length != 0)
             {
@@ -49,31 +57,10 @@ namespace DATools
             serializedPropertyRotation = m_serializedObject.FindProperty("addRotation");
             serializedPropertyScale = m_serializedObject.FindProperty("addScale");
         }
-        private void OnDisable()
-        {
-            if (defaultEditor != null)
-                DestroyImmediate(defaultEditor);
-            defaultEditor = null;
 
-            expand = null;
-
-            m_serializedObject = null;
-            serializedPropertyPosition = null;
-            serializedPropertyRotation = null;
-            serializedPropertyScale = null;
-        }
         private void OnDestroy()
         {
-            if (defaultEditor != null)
-                DestroyImmediate(defaultEditor);
-            defaultEditor = null;
-
-            expand = null;
-
-            m_serializedObject = null;
-            serializedPropertyPosition = null;
-            serializedPropertyRotation = null;
-            serializedPropertyScale = null;
+            DestroyImmediate(defaultEditor);
         }
 
         public override void OnInspectorGUI()
@@ -163,12 +150,8 @@ namespace DATools
                     GUILayout.EndHorizontal();
 
                     m_serializedObject.ApplyModifiedProperties();
-
-
                 }
             }
-
-
 
 
             foreach (var temp in targets)
@@ -212,11 +195,10 @@ namespace DATools
                     rectTransform.localScale += expand.addScale;
                 }
             }
-
         }
 
 
-        private class Expand : ScriptableObject
+        private sealed class Expand : ScriptableObject
         {
             public Vector3 addPosition;
             public Vector3 addRotation;
