@@ -13,7 +13,6 @@ namespace DATools
         private readonly GUIContent contentScale = new GUIContent(" S ", (Texture)null, "当前物体的本地缩放归1");
         private readonly GUIContent contentAddWindow = new GUIContent("增量修改");
 
-
         #region 增量面板
         private static Expand expand;//自定义数据类，不使用基类的SerializedObject。
 
