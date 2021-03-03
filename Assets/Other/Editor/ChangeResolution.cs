@@ -11,7 +11,9 @@ namespace NullNamespace
         [MenuItem("Test/Open")]
         private static void OpenChangeResolutionWindow()
         {
-            GetWindow<ChangeResolution>(true).Show();
+            var window = GetWindow<ChangeResolution>(true);
+            window.maxSize = new Vector2(200, 500);
+            window.Show();
         }
 
         private object gameViewSizesInstance;
@@ -75,6 +77,7 @@ namespace NullNamespace
                 }
             }
         }
+        private int aa;
         private void OnGUI()
         {
             if (_GameViewSizes_Builtin == null || _GameViewSizes_Custom == null)
@@ -112,18 +115,52 @@ namespace NullNamespace
 
                 GUILayout.Space(2);
 
+                Rect rect = EditorGUILayout.GetControlRect(GUILayout.Width(this.maxSize.x), GUILayout.Height(15));
                 foreach (var _GameViewSize in _GameViewSizes_Builtin)
                 {
-
-                    GUILayout.Label(_GameViewSize.displayText);
+                    if (rect.Contains(Event.current.mousePosition))
+                    {
+                        GUI.Label(rect, _GameViewSize.displayText, (GUIStyle)"LODSliderRangeSelected");
+                        if (!GUI.changed)
+                        {
+                            GUI.changed = true;
+                        }
+                    }
+                    else
+                    {
+                        GUI.Label(rect, _GameViewSize.displayText);
+                    }
+                    rect.position += new Vector2(0, 15);
                 }
-                GUILayout.Label("");
+
+                GUI.Label(rect, "");
+
                 foreach (var _GameViewSize in _GameViewSizes_Custom)
                 {
-                    GUILayout.Label(_GameViewSize.displayText);
+                    rect.position += new Vector2(0, 15);
+
+                    if (rect.Contains(Event.current.mousePosition))
+                    {
+                        GUI.Label(rect, _GameViewSize.displayText, (GUIStyle)"LODSliderRangeSelected");
+                        if (!GUI.changed)
+                        {
+                            GUI.changed = true;
+                        }
+                    }
+                    else
+                    {
+                        GUI.Label(rect, _GameViewSize.displayText);
+                    }
                 }
             }
             GUILayout.EndScrollView();
+
+            if (GUI.changed)
+            {
+                base.Repaint();
+                GUI.changed = false;
+                Debug.Log(" Event.current.mousePosition" + Event.current.mousePosition);
+            }
         }
     }
     public class _GameViewSize
