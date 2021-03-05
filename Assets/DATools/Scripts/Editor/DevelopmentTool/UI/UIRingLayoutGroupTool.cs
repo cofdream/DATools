@@ -43,14 +43,14 @@ namespace DATools
             serializedPropertyRing = null;
             radius = 50;
         }
-        public void Enable()
+        public void OnEnable()
         {
             serializedPropertyRing = serializedObjectRing.FindProperty("ringData");
         }
-        public void Disable()
+        public void OnDisable()
         {
         }
-        public void Destroy()
+        public void OnDestroy()
         {
             ringData = null;
             ringDataGUIContent = null;

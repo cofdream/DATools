@@ -30,17 +30,17 @@ namespace DATools
             dataHVGUIContent = new GUIContent("排列对象");
             spacing = 0;
         }
-        public void Destroy()
+        public void OnDestroy()
         {
             serializedObject = null;
             serializedProperty = null;
             dataHVGUIContent = null;
         }
-        public void Enable()
+        public void OnEnable()
         {
             serializedProperty = serializedObject.FindProperty("dataHV");
         }
-        public void Disable()
+        public void OnDisable()
         {
         }
         public void OnGUI()

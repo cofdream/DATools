@@ -13,16 +13,16 @@ namespace DATools
 
         }
 
-        public void Destroy()
+        public void OnDestroy()
         {
 
         }
 
-        public void Disable()
+        public void OnDisable()
         {
         }
 
-        public void Enable()
+        public void OnEnable()
         {
         }
 
