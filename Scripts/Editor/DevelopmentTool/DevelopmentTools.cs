@@ -41,7 +41,7 @@ namespace DATools
             {
                 foreach (var tool in developementTools)
                 {
-                    tool.Tool.Dispose();
+                    tool.Tool.Destroy();
                 }
 
                 developementTools = null;
@@ -113,7 +113,7 @@ namespace DATools
                     {
                         tool = assembly.CreateInstance(type.Namespace + "." + type.Name) as IDevelopementTool;
                     }
-                    tool.Init();
+                    tool.Awake();
                     tool.Enable();
                     tools.Add(tool);
                 }

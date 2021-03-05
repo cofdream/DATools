@@ -32,7 +32,7 @@ namespace DATools
 
         protected GUIContent selectSameItemGUIContent = null;
 
-        public virtual void Init()
+        public virtual void Awake()
         {
             scrollViewPosition = Vector2.zero;
 
@@ -60,7 +60,7 @@ namespace DATools
         {
 
         }
-        public virtual void Dispose()
+        public virtual void Destroy()
         {
             serializedObject = null;
 

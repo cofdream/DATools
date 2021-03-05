@@ -34,7 +34,7 @@ namespace DATools
 
 
 
-        public void Init()
+        public void Awake()
         {
             ringSelectMode = true;
             ringData = null;
@@ -50,7 +50,7 @@ namespace DATools
         public void Disable()
         {
         }
-        public void Dispose()
+        public void Destroy()
         {
             ringData = null;
             ringDataGUIContent = null;

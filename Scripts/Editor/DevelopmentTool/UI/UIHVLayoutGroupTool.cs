@@ -23,14 +23,14 @@ namespace DATools
         private float spacing;
 
 
-        public void Init()
+        public void Awake()
         {
             selectHVMode = true;
             serializedObject = new SerializedObject(this);
             dataHVGUIContent = new GUIContent("排列对象");
             spacing = 0;
         }
-        public void Dispose()
+        public void Destroy()
         {
             serializedObject = null;
             serializedProperty = null;

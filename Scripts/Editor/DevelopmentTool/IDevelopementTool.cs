@@ -3,8 +3,8 @@
     public interface IDevelopementTool
     {
         string ToolName { get; }
-        void Init();
-        void Dispose();
+        void Awake();
+        void Destroy();
         void Enable();
         void Disable();
         void OnGUI();

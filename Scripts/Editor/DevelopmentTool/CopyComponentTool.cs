@@ -21,7 +21,7 @@ namespace DATools
         private Component[] pasteComponents;
 
 
-        public void Init()
+        public void Awake()
         {
             isResetComponent = false;
             isPasteComponent = false;
@@ -36,7 +36,7 @@ namespace DATools
             pasteComponents = null;
         }
 
-        public void Dispose()
+        public void Destroy()
         {
             copyTarget = null;
             pasteTarget = null;

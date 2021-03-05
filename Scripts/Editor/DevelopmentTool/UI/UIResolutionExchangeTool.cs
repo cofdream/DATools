@@ -8,12 +8,12 @@ namespace DATools
 
         public string ToolName => "临时工具";
 
-        public void Init()
+        public void Awake()
         {
 
         }
 
-        public void Dispose()
+        public void Destroy()
         {
 
         }
