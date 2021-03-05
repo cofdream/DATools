@@ -23,9 +23,12 @@ namespace DATools
         private void OnEnable()
         {
             LoadTool();
+
+            UnityEditor.Compilation.CompilationPipeline.compilationStarted += AA;
         }
         private void OnDisable()
         {
+            UnityEditor.Compilation.CompilationPipeline.compilationStarted -= AA;
             if (developementTools != null)
             {
                 foreach (var tool in developementTools)
@@ -58,10 +61,14 @@ namespace DATools
                     LoadTool();
                 }
             }
-            if (developementTools == null)
+
+
+            if (GUILayout.Button("清除工具集"))
             {
-                return;
+                ClearTool();
             }
+
+            if (developementTools == null) return;
 
             scrollViewPosition = GUILayout.BeginScrollView(scrollViewPosition);
             {
@@ -126,6 +133,27 @@ namespace DATools
                 developementTools[index] = new UIDevelopmentToolCell() { Tool = tool, };
                 index++;
             }
+        }
+        private void ClearTool()
+        {
+            foreach (var tool in developementTools)
+            {
+                tool.Tool.Disable();
+            }
+            foreach (var tool in developementTools)
+            {
+                tool.Tool.Destroy();
+            }
+
+            developementTools = null;
+        }
+        private void AA(object @object)
+        {
+            if (developementTools != null)
+            {
+                ClearTool();
+            }
+            Debug.Log("Start 编译");
         }
 
         private class UIDevelopmentToolCell
