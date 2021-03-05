@@ -60,10 +60,14 @@ namespace DATools
                 {
                     LoadTool();
                 }
+                else
+                {
+                    return;
+                }
             }
 
 
-            if (GUILayout.Button("清除工具集"))
+            if (GUILayout.Button("清除工具集  （Tip：编译之前最好清除一下工具集）"))
             {
                 ClearTool();
             }
