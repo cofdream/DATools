@@ -49,18 +49,18 @@ namespace DATools
             isShowRootDataGUIContent = new GUIContent("显示当前的节点信息");
             selectSameItemGUIContent = new GUIContent("选中同类对象", "基于当前选中物体的节点信息去获取同类物体");
         }
-        public virtual void Enable()
+        public virtual void OnEnable()
         {
             serializedPropertySameItem = serializedObject.FindProperty("sameItems");
             serializedPropertyIsPriorityRootPosition = serializedObject.FindProperty("rootDatas");
             serializedPropertyRootData = serializedObject.FindProperty("isPriorityRootPosition");
             serializedPropertyIsShowRootData = serializedObject.FindProperty("isShowRootData");
         }
-        public virtual void Disable()
+        public virtual void OnDisable()
         {
 
         }
-        public virtual void Destroy()
+        public virtual void OnDestroy()
         {
             serializedObject = null;
 

@@ -33,7 +33,7 @@ namespace DATools
             {
                 foreach (var tool in developementTools)
                 {
-                    tool.Tool.Disable();
+                    tool.Tool.OnDisable();
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace DATools
             {
                 foreach (var tool in developementTools)
                 {
-                    tool.Tool.Destroy();
+                    tool.Tool.OnDestroy();
                 }
 
                 developementTools = null;
@@ -121,7 +121,7 @@ namespace DATools
                         tool = assembly.CreateInstance(type.Namespace + "." + type.Name) as IDevelopementTool;
                     }
                     tool.Awake();
-                    tool.Enable();
+                    tool.OnEnable();
                     tools.Add(tool);
                 }
             }
@@ -138,11 +138,11 @@ namespace DATools
         {
             foreach (var tool in developementTools)
             {
-                tool.Tool.Disable();
+                tool.Tool.OnDisable();
             }
             foreach (var tool in developementTools)
             {
-                tool.Tool.Destroy();
+                tool.Tool.OnDestroy();
             }
 
             developementTools = null;
@@ -153,7 +153,6 @@ namespace DATools
             {
                 ClearTool();
             }
-            Debug.Log("Start 编译");
         }
 
         private class UIDevelopmentToolCell

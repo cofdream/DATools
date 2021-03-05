@@ -36,7 +36,7 @@ namespace DATools
             pasteComponents = null;
         }
 
-        public void Destroy()
+        public void OnDestroy()
         {
             copyTarget = null;
             pasteTarget = null;
@@ -167,12 +167,12 @@ namespace DATools
             }
         }
 
-        public void Enable()
+        public void OnEnable()
         {
 
         }
 
-        public void Disable()
+        public void OnDisable()
         {
 
         }
