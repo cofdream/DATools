@@ -31,22 +31,17 @@ namespace DATools
                 return;
             }
 
-            //StringBuilder sb = new StringBuilder(paths.Length * 3 + 4);
-            //sb.AppendLine("Delete Directorys:     Not Refresh Assets");
-            //sb.AppendLine("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
             foreach (var item in paths)
             {
                 if (File.Exists(item))
                 {
                     File.Delete(item);
-                    //sb.AppendLine(item);
                 }
                 else
                 {
                     if (Directory.Exists(item))
                     {
-                        Directory.Delete(item);
-                        //sb.AppendLine(item);
+                        Directory.Delete(item, true);
                     }
                 }
 
@@ -54,13 +49,8 @@ namespace DATools
                 if (File.Exists(meta))
                 {
                     File.Delete(meta);
-                    //sb.AppendLine(meta);
-                    //sb.AppendLine();
                 }
             }
-            //sb.AppendLine("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑");
-
-            //Debug.LogWarning(sb.ToString());
         }
 
         [MenuItem("Assets/Delete Not Refresh", true)]
