@@ -23,6 +23,8 @@ namespace DATools
         List<SearchData> allSearchDataList;
         List<SearchData> drawSearchDataList;
 
+        private Vector2 scroolViewPosition;
+
         private void OnEnable()
         {
             LoadAttributes();
@@ -53,6 +55,39 @@ namespace DATools
             GUILayout.EndHorizontal();
 
             GUILayout.Space(5);
+
+            //Rect rect = EditorGUILayout.GetControlRect();
+
+            //rect.position = Vector2.zero;
+            //rect.size = new Vector2(position.width, position.height);
+
+            //Rect viewRect = new Rect(new Vector2(0, 0), new Vector2(position.width - 15, position.height * 2));
+
+            //scroolViewPosition = GUI.BeginScrollView(rect, scroolViewPosition, viewRect, false, true);
+            //{
+            //    Handles.color = Color.black;
+
+            //    Vector2 contentPostion = new Vector2(0, 4 - 20);
+            //    Vector2 contentSize = new Vector2(viewRect.size.x, 20);
+
+            //    if (drawSearchDataList.Count > 0) Handles.DrawLine(new Vector3(contentPostion.x, contentPostion.y + 18), new Vector3(contentSize.x, contentPostion.y + 18));
+
+            //    foreach (var searchData in drawSearchDataList)
+            //    {
+            //        contentPostion += new Vector2(0, 20);
+
+            //        GUI.Label(new Rect(contentPostion, new Vector2(80, 20)), searchData.attribute.Name);
+
+            //        if (GUI.Button(new Rect(new Vector2(contentPostion.x + 180, contentPostion.y + 1), new Vector2(40, 20)), "Open"))
+            //        {
+            //            searchData.methodInfo.Invoke(null, null);
+            //        }
+
+            //        Handles.DrawLine(new Vector3(contentPostion.x, contentPostion.y + 22), new Vector3(contentSize.x, contentPostion.y + 22));
+            //        contentPostion += new Vector2(0, 4);
+            //    }
+            //}
+            //GUI.EndScrollView();
             EditorGUILayout.BeginVertical();
             {
                 foreach (var searchData in drawSearchDataList)
@@ -60,6 +95,9 @@ namespace DATools
                     GUILayout.BeginHorizontal();
                     {
                         GUILayout.Label(searchData.attribute.Name);
+
+
+
                         GUILayout.FlexibleSpace();
                         if (GUILayout.Button("Open"))
                         {
@@ -71,6 +109,7 @@ namespace DATools
             }
             EditorGUILayout.EndVertical();
         }
+
 
         private void LoadAttributes()
         {
