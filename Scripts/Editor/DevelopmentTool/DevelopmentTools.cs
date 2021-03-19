@@ -96,39 +96,40 @@ namespace DATools
 
         private void LoadTool()
         {
-            var assmblys = System.AppDomain.CurrentDomain.GetAssemblies();
+            //var assmblys = System.AppDomain.CurrentDomain.GetAssemblies();
             var toolType = typeof(IDevelopementTool);
+            var assmbly = toolType.Assembly;
             System.Collections.Generic.List<IDevelopementTool> tools = new System.Collections.Generic.List<IDevelopementTool>();
 
             var unityObj = typeof(UnityEngine.ScriptableObject);
-            foreach (var assembly in assmblys)
-            {
-                System.Collections.Generic.IEnumerable<System.Type> types = assembly.GetTypes().Where(t => toolType.IsAssignableFrom(t) && t.IsAbstract == false);
+            //foreach (var assembly in assmblys)
+            //{
+            System.Collections.Generic.IEnumerable<System.Type> types = assmbly.GetTypes().Where(t => toolType.IsAssignableFrom(t) && t.IsAbstract == false);
 
-                foreach (var type in types)
+            foreach (var type in types)
+            {
+                IDevelopementTool tool = null;
+                if (unityObj.IsAssignableFrom(type))
                 {
-                    IDevelopementTool tool = null;
-                    if (unityObj.IsAssignableFrom(type))
+                    var toolTypes = Resources.FindObjectsOfTypeAll(type);
+                    if (toolTypes.Length != 0)
                     {
-                        var toolTypes = Resources.FindObjectsOfTypeAll(type);
-                        if (toolTypes.Length != 0)
-                        {
-                            tool = toolTypes[0] as IDevelopementTool;
-                        }
-                        else
-                        {
-                            tool = ScriptableObject.CreateInstance(type) as IDevelopementTool;
-                        }
+                        tool = toolTypes[0] as IDevelopementTool;
                     }
                     else
                     {
-                        tool = assembly.CreateInstance(type.Namespace + "." + type.Name) as IDevelopementTool;
+                        tool = ScriptableObject.CreateInstance(type) as IDevelopementTool;
                     }
-                    tool.Awake();
-                    tool.OnEnable();
-                    tools.Add(tool);
                 }
+                else
+                {
+                    tool = assmbly.CreateInstance(type.Namespace + "." + type.Name) as IDevelopementTool;
+                }
+                tool.Awake();
+                tool.OnEnable();
+                tools.Add(tool);
             }
+            //}
 
             developementTools = new UIDevelopmentToolCell[tools.Count];
             int index = 0;
