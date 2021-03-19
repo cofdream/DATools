@@ -14,6 +14,7 @@ namespace DATools
     // 4.upadte++ 点击箭头滑动自动选中到对应分辨率的位置上，需要先完成2.
     public class GameViewSizeSelectUtilityWindow : EditorWindow
     {
+        [SearchTools("快捷修改Game视图分辨率")]
         [MenuItem("DATools/Game View Size Select Utility")]
         private static void OpenGameViewSizeSelectUtilityWindow()
         {
