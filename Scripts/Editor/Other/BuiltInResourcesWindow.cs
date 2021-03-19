@@ -7,7 +7,7 @@ namespace DATools
 {
     public sealed class BuiltInResourcesWindow : EditorWindow
     {
-        [MenuItem("DATools/Built-in styles and icons")]
+        [MenuItem("DATools/Other/Built-in styles and icons")]
         public static void ShowWindow()
         {
             BuiltInResourcesWindow w = (BuiltInResourcesWindow)EditorWindow.GetWindow<BuiltInResourcesWindow>();
