@@ -8,6 +8,7 @@ namespace DATools.Development
         [MenuItem("Build Package/Run")]
         internal static void BuildDAToolsPackage()
         {
+            EditorUtility.DisplayProgressBar("Build", "Build  in git package.Please Wait.", 0);
             Debug.Log(Utils.CMD(new string[]
             {
                 "git tag -d v0.0.1",
@@ -16,6 +17,7 @@ namespace DATools.Development
                 "git tag v0.0.1 upm",
                 "git push origin upm --tags",
             }));
+            EditorUtility.ClearProgressBar();
         }
     }
 }
