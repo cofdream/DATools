@@ -1,4 +1,6 @@
 ﻿
+using System.Text;
+
 namespace DATools
 {
     public static class Utils
@@ -77,25 +79,59 @@ namespace DATools
         }
         private static void CmdOpenDirectory(object obj)
         {
-            var p = new System.Diagnostics.Process();
-            p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.Arguments = "/c start " + obj.ToString();
-            p.StartInfo.StandardOutputEncoding = System.Text.Encoding.GetEncoding("GB2312");
+            var process = new System.Diagnostics.Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.Arguments = "/c start " + obj.ToString();
+            process.StartInfo.StandardOutputEncoding = System.Text.Encoding.GetEncoding("GB2312");
 
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.RedirectStandardInput = true;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.RedirectStandardError = true;
-            p.StartInfo.CreateNoWindow = true;
-            p.Start();
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
 
-            p.WaitForExit();
+            process.WaitForExit();
 
-            UnityEngine.Debug.Log(p.StandardOutput.ReadToEnd());
+            UnityEngine.Debug.Log(process.StandardOutput.ReadToEnd());
 
-            p.Close();
+            process.Close();
         }
 
+        public static string CMD(string content)
+        {
+            return CMD(new string[] { content });
+        }
+        public static string CMD(string[] contents)
+        {
+            if (contents == null || contents.Length == 0) return null;
 
+
+            var process = new System.Diagnostics.Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.StandardOutputEncoding = System.Text.Encoding.GetEncoding("GB2312");
+            process.Start();
+
+            StringBuilder output = new StringBuilder("cmd:\n");
+            foreach (var content in contents)
+            {
+                process.StandardInput.WriteLine(content);
+                process.StandardInput.AutoFlush = true;
+                output.AppendLine(content);
+            }
+
+            process.StandardInput.WriteLine("exit");
+
+            output.AppendLine();
+            output.AppendLine(process.StandardOutput.ReadToEnd());
+
+            process.WaitForExit();
+
+            return output.ToString();
+        }
     }
 }
