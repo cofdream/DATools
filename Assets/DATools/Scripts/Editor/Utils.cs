@@ -1,7 +1,5 @@
-﻿
-using System.Text;
+﻿using System.Text;
 using UnityEditor;
-using UnityEngine.Events;
 
 namespace DATools
 {
@@ -115,32 +113,36 @@ namespace DATools
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardInput = true;
             process.StartInfo.StandardOutputEncoding = System.Text.Encoding.GetEncoding("GB2312");
-            process.Start();
+
 
             StringBuilder output = new StringBuilder("cmd:\n");
+
             int length = cmdInfos.Length;
             float progress;
             for (int i = 0; i < length; i++)
             {
+                process.Start();
+
                 var cmdInfo = cmdInfos[i];
 
-                progress = i / length;
+                progress = (float)i / length;
                 EditorUtility.DisplayProgressBar(cmdInfo.Title, cmdInfo.Info, progress);
 
                 process.StandardInput.WriteLine(cmdInfo.CMDContent);
                 process.StandardInput.AutoFlush = true;
 
                 output.AppendLine(cmdInfo.CMDContent);
+                process.StandardInput.WriteLine("exit");
+                process.WaitForExit();
+
+                output.AppendLine();
+                output.AppendLine(process.StandardOutput.ReadToEnd());
             }
+
+            process.Close();
 
             EditorUtility.ClearProgressBar();
 
-            process.StandardInput.WriteLine("exit");
-
-            output.AppendLine();
-            output.AppendLine(process.StandardOutput.ReadToEnd());
-
-            process.WaitForExit();
 
             return output.ToString();
         }
