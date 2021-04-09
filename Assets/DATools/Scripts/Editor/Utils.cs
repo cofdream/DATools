@@ -1,5 +1,7 @@
 ﻿
 using System.Text;
+using UnityEditor;
+using UnityEngine.Events;
 
 namespace DATools
 {
@@ -98,15 +100,14 @@ namespace DATools
             process.Close();
         }
 
-        public static string CMD(string content)
+        public class CmdInfo
         {
-            return CMD(new string[] { content });
+            public string CMDContent;
+            public string Title;
+            public string Info;
         }
-        public static string CMD(string[] contents)
+        public static string Cmd(CmdInfo[] cmdInfos)
         {
-            if (contents == null || contents.Length == 0) return null;
-
-
             var process = new System.Diagnostics.Process();
             process.StartInfo.FileName = "cmd.exe";
             process.StartInfo.UseShellExecute = false;
@@ -117,12 +118,22 @@ namespace DATools
             process.Start();
 
             StringBuilder output = new StringBuilder("cmd:\n");
-            foreach (var content in contents)
+            int length = cmdInfos.Length;
+            float progress;
+            for (int i = 0; i < length; i++)
             {
-                process.StandardInput.WriteLine(content);
+                var cmdInfo = cmdInfos[i];
+
+                progress = i / length;
+                EditorUtility.DisplayProgressBar(cmdInfo.Title, cmdInfo.Info, progress);
+
+                process.StandardInput.WriteLine(cmdInfo.CMDContent);
                 process.StandardInput.AutoFlush = true;
-                output.AppendLine(content);
+
+                output.AppendLine(cmdInfo.CMDContent);
             }
+
+            EditorUtility.ClearProgressBar();
 
             process.StandardInput.WriteLine("exit");
 
