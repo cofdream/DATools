@@ -96,8 +96,6 @@ namespace DATools
                     {
                         GUILayout.Label(searchData.attribute.Name);
 
-
-
                         GUILayout.FlexibleSpace();
                         if (GUILayout.Button("Open"))
                         {
