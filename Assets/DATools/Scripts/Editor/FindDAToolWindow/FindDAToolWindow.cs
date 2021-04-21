@@ -29,28 +29,22 @@ namespace DATools
         {
             LoadAttributes();
         }
+
         private void OnGUI()
         {
             if (allSearchDataList == null) LoadAttributes();
 
             GUILayout.BeginHorizontal(GUI.skin.FindStyle("Toolbar"));
             {
-                searchFilter = GUILayout.TextField(searchFilter, (GUIStyle)"ToolbarSeachTextField");
+                Rect rect = GUILayoutUtility.GetRect(0, this.maxSize.x, 18, 18, EditorStyles.toolbarSearchField, GUILayout.MinWidth(60));
 
-                if (GUILayout.Button(string.Empty, (GUIStyle)"ToolbarSeachCancelButton"))
-                {
-                    GUI.FocusControl(null);
-                    if (searchFilter != string.Empty)
-                    {
-                    }
-                    searchFilter = string.Empty;
-                    FindTool();
-                }
-                if (GUILayout.Button("Search", GUILayout.Width(56)))
+                var temp_SearchFilter = searchFilter;
+                searchFilter = GUIExpand.DrawSearchField(rect, searchFilter);
+
+                if (temp_SearchFilter != searchFilter)
                 {
                     FindTool();
                 }
-
             }
             GUILayout.EndHorizontal();
 
@@ -106,6 +100,11 @@ namespace DATools
                 }
             }
             EditorGUILayout.EndVertical();
+
+            if (GUI.changed)
+            {
+                base.Repaint();
+            }
         }
 
 
