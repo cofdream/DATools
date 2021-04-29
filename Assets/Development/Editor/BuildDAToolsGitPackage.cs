@@ -8,15 +8,16 @@ namespace DATools.Development
         [MenuItem("Build Package/Run")]
         internal static void BuildDAToolsPackage()
         {
-            Debug.Log(Utils.Cmd(new Utils.CmdInfo[]
+            var cmds = new CMD[]
             {
-                new Utils.CmdInfo(){  CMDContent = "git tag -d v0.0.1"                                        ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git tag -d v0.0.1"                                      },
-                new Utils.CmdInfo(){  CMDContent = "git push origin :refs/tags/v0.0.1"                        ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git push origin :refs/tags/v0.0.1"                      },
-                new Utils.CmdInfo(){  CMDContent = "git subtree split --prefix=Assets/DATools --branch upm"   ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git subtree split --prefix=Assets/DATools --branch upm" },
-                new Utils.CmdInfo(){  CMDContent = "git tag v0.0.1 upm"                                       ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git tag v0.0.1 upm"                                     },
-                new Utils.CmdInfo(){  CMDContent = "git push origin upm --tags"                               ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git push origin upm --tags"                             },
-            }));
-        }
+                new CMD(){  CMDContent = "git tag -d v0.0.1"                                        ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git tag -d v0.0.1"                                      },
+                new CMD(){  CMDContent = "git push origin :refs/tags/v0.0.1"                        ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git push origin :refs/tags/v0.0.1"                      },
+                new CMD(){  CMDContent = "git subtree split --prefix=Assets/DATools --branch upm"   ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git subtree split --prefix=Assets/DATools --branch upm" },
+                new CMD(){  CMDContent = "git tag v0.0.1 upm"                                       ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git tag v0.0.1 upm"                                     },
+                new CMD(){  CMDContent = "git push origin upm --tags"                               ,Title = "Build" ,Info = "Build  in git package.Please Wait. cmd: git push origin upm --tags"                             },
+            };
 
+            Debug.Log(CMD.Run(cmds, cmds.Length));
+        }
     }
 }
