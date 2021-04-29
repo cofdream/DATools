@@ -1,6 +1,4 @@
-﻿using System.Text;
-using UnityEditor;
-
+﻿
 namespace DATools
 {
     public static class Utils
@@ -96,55 +94,6 @@ namespace DATools
             UnityEngine.Debug.Log(process.StandardOutput.ReadToEnd());
 
             process.Close();
-        }
-
-        public class CmdInfo
-        {
-            public string CMDContent;
-            public string Title;
-            public string Info;
-        }
-        public static string Cmd(CmdInfo[] cmdInfos)
-        {
-            var process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.StandardOutputEncoding = System.Text.Encoding.GetEncoding("GB2312");
-
-
-            StringBuilder output = new StringBuilder("cmd:\n");
-
-            int length = cmdInfos.Length;
-            float progress;
-            for (int i = 0; i < length; i++)
-            {
-                process.Start();
-
-                var cmdInfo = cmdInfos[i];
-
-                progress = (float)i / length;
-                EditorUtility.DisplayProgressBar(cmdInfo.Title, cmdInfo.Info, progress);
-
-                process.StandardInput.WriteLine(cmdInfo.CMDContent);
-                process.StandardInput.AutoFlush = true;
-
-                output.AppendLine(cmdInfo.CMDContent);
-                process.StandardInput.WriteLine("exit");
-                process.WaitForExit();
-
-                output.AppendLine();
-                output.AppendLine(process.StandardOutput.ReadToEnd());
-            }
-
-            process.Close();
-
-            EditorUtility.ClearProgressBar();
-
-
-            return output.ToString();
         }
     }
 }
