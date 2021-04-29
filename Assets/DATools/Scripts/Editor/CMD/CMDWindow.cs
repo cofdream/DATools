@@ -30,7 +30,7 @@ namespace DATools
 
 
         private CMDData cmdData;
-        private string newCMDDataName = "NewCMDData";
+        private string createDataPath = "Assets/NewCMDData.asset";
 
         private SerializedObject serializedObject;
         private SerializedProperty serializedProperty;
@@ -39,15 +39,13 @@ namespace DATools
         {
             GUILayout.BeginHorizontal();
 
-            newCMDDataName = GUILayout.TextField(newCMDDataName);
+            createDataPath = GUILayout.TextField(createDataPath);
             if (GUILayout.Button("Create"))
             {
                 var _cmdData = ScriptableObject.CreateInstance<CMDData>();
 
-                string path = $"Assets/{newCMDDataName}.asset";
-
-                AssetDatabase.CreateAsset(_cmdData, path);
-                AssetDatabase.ImportAsset(path);
+                AssetDatabase.CreateAsset(_cmdData, createDataPath);
+                AssetDatabase.ImportAsset(createDataPath);
             }
 
 
