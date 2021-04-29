@@ -44,11 +44,7 @@ namespace DATools
             {
                 var _cmdData = ScriptableObject.CreateInstance<CMDData>();
 
-#if DAPACKAGE
                 string path = $"Assets/{newCMDDataName}.asset";
-#else
-                string path = $"Packages/com.devilangel.datools/{newCMDDataName}.asset";
-#endif
 
                 AssetDatabase.CreateAsset(_cmdData, path);
                 AssetDatabase.ImportAsset(path);
