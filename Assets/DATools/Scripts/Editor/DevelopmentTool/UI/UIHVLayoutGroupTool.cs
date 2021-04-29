@@ -179,7 +179,7 @@ namespace DATools
 
                     //获取坐标偏移
                     float slefOffestY = element.rect.height * 0.5f;
-                    lastPos.y += (slefOffestY + lastOffestY) * direction + spacing;
+                    lastPos.y += (slefOffestY + lastOffestY) * direction - spacing;
 
                     element.localPosition = lastPos;
                     //保留下次坐标偏移距离
