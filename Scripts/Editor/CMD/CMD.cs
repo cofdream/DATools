@@ -11,7 +11,6 @@ namespace DATools
         public string Title;
         public string Info;
 
-
         public static string Run(IEnumerable<CMD> cmdInfos, int length)
         {
             var process = new System.Diagnostics.Process();
