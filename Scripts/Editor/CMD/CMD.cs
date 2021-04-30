@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
+using UnityEngine;
 
 namespace DATools
 {
     [System.Serializable]
-    public struct CMD
+    public class CMD
     {
-        public string CMDContent;
         public string Title;
+        public string Command;
         public string Info;
 
         public static string Run(IEnumerable<CMD> cmdInfos, int length)
@@ -19,10 +20,10 @@ namespace DATools
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.StandardOutputEncoding = System.Text.Encoding.GetEncoding("GB2312");
+            process.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("GB2312");
 
+            StringBuilder output = new StringBuilder();
 
-            StringBuilder output = new StringBuilder("cmd:\n");
 
             float index = 0;
             float progress;
@@ -31,16 +32,14 @@ namespace DATools
                 process.Start();
 
                 progress = (float)index / length;
-                EditorUtility.DisplayProgressBar(cmdInfo.Title, cmdInfo.Info, progress);
+                EditorUtility.DisplayProgressBar
+                    (cmdInfo.Title, string.IsNullOrWhiteSpace(cmdInfo.Info) ? cmdInfo.Command : cmdInfo.Info, progress);
 
-                process.StandardInput.WriteLine(cmdInfo.CMDContent);
+                process.StandardInput.WriteLine(cmdInfo.Command);
                 process.StandardInput.AutoFlush = true;
-
-                output.AppendLine(cmdInfo.CMDContent);
                 process.StandardInput.WriteLine("exit");
                 process.WaitForExit();
 
-                output.AppendLine();
                 output.AppendLine(process.StandardOutput.ReadToEnd());
 
                 index++;
@@ -49,7 +48,6 @@ namespace DATools
             process.Close();
 
             EditorUtility.ClearProgressBar();
-
 
             return output.ToString();
         }
