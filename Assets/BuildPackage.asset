@@ -13,33 +13,28 @@ MonoBehaviour:
   m_Name: BuildPackage
   m_EditorClassIdentifier: 
   cmds:
-  - caption: "\u91CD\u65B0\u62C9\u53D6upm"
+  - Title: Build Package
+    Command: git subtree split --rejoin --prefix=Assets/DATools --branch upm
+    Info: 
     State: 1
-    CMD:
-      CMDContent: git subtree split --prefix=Assets/DATools --branch upm
-      Title: Build in git package
-      Info: git subtree split --prefix=Assets/DATools --branch upm
-  - caption: "\u521B\u5EFA\u5206\u652Fupm\u7684Tag"
+    Message: 
+  - Title: Build Package
+    Command: git tag v0.0.3 upm
+    Info: 
     State: 1
-    CMD:
-      CMDContent: git tag v0.0.2 upm
-      Title: Build in git package
-      Info: git tag v0.0.2 upm
-  - caption: "\u63D0\u4EA4\u8FDC\u7A0B\u4ED3\u5E93Tag"
+    Message: 
+  - Title: Build Package
+    Command: git push origin upm --tags
+    Info: 
     State: 1
-    CMD:
-      CMDContent: git push origin upm --tags
-      Title: Build in git package
-      Info: git push origin upm --tags
-  - caption: "\u5220\u9664\u672C\u5730Tag"
+    Message: 
+  - Title: Build Package
+    Command: git tag -d v0.0.2
+    Info: 
     State: 1
-    CMD:
-      CMDContent: git tag -d v0.0.1
-      Title: Build in git package
-      Info: git tag -d v0.0.1
-  - caption: "\u5220\u9664\u8FDC\u7A0B\u4ED3\u5E93Tag"
+    Message: 
+  - Title: Build Package
+    Command: git push origin :refs/tags/v0.0.2
+    Info: 
     State: 1
-    CMD:
-      CMDContent: git push origin :refs/tags/v0.0.1
-      Title: Build in git package
-      Info: git push origin :refs/tags/v0.0.1
+    Message: 
