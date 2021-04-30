@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f00c3c905c42fe44ad9da2d987aab9f, type: 3}
+  m_Name: NewBuildPackage
+  m_EditorClassIdentifier: 
+  cmds:
+  - caption: "\u91CD\u65B0\u62C9\u53D6upm"
+    State: 1
+    CMD:
+      CMDContent: git subtree split --rejoin --prefix=Assets/DATools --branch upm2
+      Title: Build in git package
+      Info: git subtree split --rejoin --prefix=Assets/DATools --branch upm2
+  - caption: "\u521B\u5EFA\u5206\u652Fupm\u7684Tag"
+    State: 1
+    CMD:
+      CMDContent: git tag v0.0.2 upm2
+      Title: Build in git package
+      Info: git tag v0.0.2 upm2
+  - caption: "\u63D0\u4EA4\u8FDC\u7A0B\u4ED3\u5E93Tag"
+    State: 1
+    CMD:
+      CMDContent: git push origin upm2 --tags
+      Title: Build in git package
+      Info: git push origin upm2 --tags
+  - caption: "\u5220\u9664\u672C\u5730Tag"
+    State: 1
+    CMD:
+      CMDContent: git tag -d v0.0.1
+      Title: Build in git package
+      Info: git tag -d v0.0.1
+  - caption: "\u5220\u9664\u8FDC\u7A0B\u4ED3\u5E93Tag"
+    State: 1
+    CMD:
+      CMDContent: git push origin :refs/tags/v0.0.1
+      Title: Build in git package
+      Info: git push origin :refs/tags/v0.0.1
