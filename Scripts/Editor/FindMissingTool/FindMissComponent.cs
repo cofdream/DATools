@@ -7,7 +7,7 @@ namespace DATools
     public class FindMissComponent : EditorWindow
     {
         [SearchTools("寻找丢失脚本的游戏对象")]
-        [MenuItem("DATools/Find Miss Component Window")]
+        [MenuItem("DATools/Find Missing Tools/Find Miss Component")]
         static void OpenWindow()
         {
             var window = GetWindow<FindMissComponent>();
