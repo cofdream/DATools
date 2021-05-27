@@ -6,15 +6,15 @@ using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace TheNext.ArtTools
+namespace other
 {
     /// <summary>
     /// 用于创建位图文字
     /// </summary>
     public sealed class BitmapFontGenerator : EditorWindow
     {
-        [MenuItem("DATools/Other/Font/创建BitmapFont")]
-        public static void OpenBitmapFontEditor()
+        //[MenuItem("DATools/Other/Font/创建BitmapFont")]
+        private static void OpenBitmapFontEditor()
         {
             BitmapFontGenerator win = EditorWindow.GetWindow<BitmapFontGenerator>();
             win.minSize = new Vector2(598, 300);
