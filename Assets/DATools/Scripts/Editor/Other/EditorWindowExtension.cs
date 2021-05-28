@@ -2,7 +2,10 @@
 using UnityEditor;
 using System;
 using System.Linq;
+
+#if !UNITY_2020_1_OR_NEWER
 using System.Reflection;
+#endif
 
 namespace DATools
 {
