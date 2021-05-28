@@ -13,7 +13,7 @@ namespace DATools
         private static void Open()
         {
             var window = GetWindow<OpenNewInspector>();
-            window.position = EditorMainWindow.GetMainWindowCenteredPosition(new Vector2(500, 800));
+            window.position = EditorWindowExtension.GetMainWindowCenteredPosition(new Vector2(500, 800));
             window.Show();
         }
         private List<MyInspectorInfo> selectGameObjectList = new List<MyInspectorInfo>() { new MyInspectorInfo(), new MyInspectorInfo(), new MyInspectorInfo() };

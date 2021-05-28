@@ -13,7 +13,7 @@ namespace DATools
         static void OpenWindow()
         {
             var window = GetWindow<FindDAToolWindow>();
-            window.position = EditorMainWindow.GetMainWindowCenteredPosition(new Vector2(300, 600));
+            window.position = EditorWindowExtension.GetMainWindowCenteredPosition(new Vector2(300, 600));
             window.Show();
         }
 

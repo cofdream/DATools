@@ -11,7 +11,7 @@ namespace DATools
         static void OpenWindow()
         {
             var window = GetWindow<FindMissComponent>();
-            window.position = EditorMainWindow.GetMainWindowCenteredPosition(new Vector2(300, 400));
+            window.position = EditorWindowExtension.GetMainWindowCenteredPosition(new Vector2(300, 400));
             window.Show();
         }
 

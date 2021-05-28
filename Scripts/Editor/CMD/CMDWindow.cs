@@ -25,7 +25,7 @@ namespace DATools
         [MenuItem("CMD/Open", false, 11)]
         static void OpenWindow()
         {
-            EditorMainWindow.GetWindowInCenter<CMDWindow>(new Vector2(600, 700)).Show();
+            EditorWindowExtension.GetWindowInCenter<CMDWindow>(new Vector2(600, 700)).Show();
         }
 
 
