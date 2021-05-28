@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace DATools
-{   
-    // 寻找丢失引用对象
+{
     public class FindMissingObjectReference : EditorWindow
     {
-        [SearchTools("todo")]
+        [SearchTools("寻找对象序列化字段丢失的引用")]
         [MenuItem("DATools/Find Missing Tools/Find Missing Object Reference")]
         static void OpenWindow()
         {
@@ -31,6 +30,7 @@ namespace DATools
             ".cs",
             ".shader",
         };
+
         private void OnEnable()
         {
             missingInfos = new List<MissingInfo>();
@@ -47,25 +47,36 @@ namespace DATools
 
             //寻找指定对象的脚本
 
-            //GUILayout.BeginHorizontal();
-            //{
-            //    GUILayout.Label(new GUIContent("Target: "));
-            //    needFindObject = EditorGUILayout.ObjectField(needFindObject, typeof(Object), true);
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label(new GUIContent("Aseet: "));
+                needFindObject = EditorGUILayout.ObjectField(needFindObject, typeof(Object), true);
 
-            //    GUI.enabled = needFindObject != null;
-            //    if (GUILayout.Button("Find"))
-            //    {
-            //        missingInfos.Clear();
+                GUI.enabled = needFindObject != null;
+                if (GUILayout.Button("Find"))
+                {
+                    missingInfos.Clear();
 
-            //        var missingInfo = GetMissingObjectReference(AssetDatabase.GetAssetPath(needFindObject));
-            //        if (missingInfo.MissingDatas.Count > 0)
-            //        {
-            //            missingInfos.Add(missingInfo);
-            //        }
-            //    }
-            //    GUI.enabled = true;
-            //}
-            //GUILayout.EndHorizontal();
+                    var missingInfo = GetMissingObjectReference__(needFindObject);
+                    if (missingInfo != null)
+                    {
+                        GameObject go = needFindObject as GameObject;
+                        if (go != null && go.scene.rootCount > 0)
+                        {
+                            missingInfo.Path = AssetDatabase.GetAssetPath(go);
+                        }
+                        else
+                        {
+                            missingInfo.Path = string.Empty;
+                        }
+
+                        missingInfos.Add(missingInfo);
+                    }
+
+                }
+                GUI.enabled = true;
+            }
+            GUILayout.EndHorizontal();
 
 
             GUILayout.BeginHorizontal();
@@ -246,6 +257,78 @@ namespace DATools
             return missingInfo;
         }
 
+        public static MissingInfo GetMissingObjectReference__(Object obj)
+        {
+            GameObject gameObject = obj as GameObject;
+            if (gameObject != null)
+            {
+                return FindGameObject(gameObject);
+            }
+
+            Texture2D texture2D = obj as Texture2D;
+            if (texture2D != null)
+            {
+
+                return null;
+            }
+
+            Sprite sprite = obj as Sprite;
+            if (sprite != null)
+            {
+
+                return null;
+            }
+
+            return null;
+        }
+
+        public static MissingInfo FindGameObject(GameObject gameObject)
+        {
+
+            MissingInfo missingInfo = new MissingInfo();
+            missingInfo.MissingObject = gameObject;
+            missingInfo.MissingDatas = new List<MissingData>();
+
+            var components = gameObject.GetComponentsInChildren<Component>(true);
+
+            foreach (var component in components)
+            {
+                if (component == null)
+                {
+
+                    missingInfo.MissingDatas.Add(new MissingData()
+                    {
+                        PropertyName = "Component missing"
+                    });
+
+                    Debug.LogWarningFormat("Prefab has missing scripts,Name:{0}.", gameObject.name);
+                }
+                else
+                {
+                    SerializedObject serializedObject = new SerializedObject(component);
+
+                    SerializedProperty serializedProperty = serializedObject.GetIterator();
+                    while (serializedProperty.NextVisible(true))
+                    {
+                        if (serializedProperty.propertyType == SerializedPropertyType.ObjectReference)
+                        {
+                            //引用对象是null 并且 引用ID不是0 说明丢失了引用
+                            if (serializedProperty.objectReferenceValue == null && serializedProperty.objectReferenceInstanceIDValue != 0)
+                            {
+                                missingInfo.MissingDatas.Add(new MissingData()
+                                {
+                                    PropertyName = serializedProperty.propertyPath,
+                                    InstanceID = serializedProperty.objectReferenceInstanceIDValue,
+                                });
+
+                                Debug.LogWarningFormat("{0} 引用丢失\n\n丢失属性：{1}\n引用id：{2}", component.name, serializedProperty.propertyPath, serializedProperty.objectReferenceInstanceIDValue);
+                            }
+                        }
+                    }
+                }
+            }
+            return missingInfo;
+        }
 
         private static bool IsIgnore(string path)
         {
@@ -258,5 +341,23 @@ namespace DATools
             }
             return false;
         }
+
+        #region Data Class
+
+        [System.Serializable]
+        public class MissingData
+        {
+            public string PropertyName;
+            public int InstanceID;
+        }
+
+        [System.Serializable]
+        public class MissingInfo
+        {
+            public Object MissingObject;
+            public string Path;
+            public List<MissingData> MissingDatas;
+        }
+        #endregion    
     }
 }
