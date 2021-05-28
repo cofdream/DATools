@@ -11,7 +11,7 @@ namespace DATools
         [MenuItem("DATools/Replace Clipboard String Window")]
         static void OpenWindow()
         {
-            EditorMainWindow.GetWindowInCenter<ReplaceClipboardString>().Show();
+            EditorWindowExtension.GetWindowInCenter<ReplaceClipboardString>().Show();
         }
 
 

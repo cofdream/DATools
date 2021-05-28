@@ -9,7 +9,7 @@ namespace DATools
         [MenuItem("DATools/AssetFindTool")]
         private static void Open()
         {
-            EditorMainWindow.GetWindowInCenter<AssetFind>(new Vector2(550, 500)).Show();
+            EditorWindowExtension.GetWindowInCenter<AssetFind>(new Vector2(550, 500)).Show();
         }
 
 

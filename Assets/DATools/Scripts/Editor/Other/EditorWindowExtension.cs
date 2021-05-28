@@ -6,10 +6,11 @@ using System.Reflection;
 
 namespace DATools
 {
-    public static class EditorMainWindow
+    /// <summary>
+    /// 编辑器窗口 扩展
+    /// </summary>
+    public static class EditorWindowExtension
     {
-        private static UnityEngine.Object mainWindow = null;
-
         public static T GetWindowInCenter<T>() where T : EditorWindow
         {
             return GetWindowInCenter<T>(new Vector2(600, 300));
@@ -37,8 +38,22 @@ namespace DATools
             pos.y = parentWindowPosition.y + h;
             return pos;
         }
+
+
+#if UNITY_2020_1_OR_NEWER
+        private static UnityEngine.Object mainWindow = null;
+
+        private static Type[] GetAllDerivedTypes(this AppDomain aAppDomain, Type aType)
+        {
+            return TypeCache.GetTypesDerivedFrom(aType).ToArray();
+        }
+#endif
+
         public static Rect GetMainWindowPositon()
         {
+#if UNITY_2020_1_OR_NEWER
+            return EditorGUIUtility.GetMainWindowPosition();
+#else
             if (mainWindow == null)
             {
                 var containerWinType = AppDomain.CurrentDomain.GetAllDerivedTypes(typeof(ScriptableObject)).FirstOrDefault(t => t.Name == "ContainerWindow");
@@ -61,7 +76,7 @@ namespace DATools
             if (mainWindow == null)
             {
                 Debug.LogError("Unity mainWindow API change,Please Check!");
-                return new Rect(0f, 0f, 400f, 600f);
+                return new Rect(0f, 0f, 1000f, 600f);
             }
 
             var positionProperty = mainWindow.GetType().GetProperty("position", BindingFlags.Public | BindingFlags.Instance);
@@ -69,10 +84,7 @@ namespace DATools
                 throw new MissingFieldException("Can't find internal fields 'position'. Maybe something has changed inside Unity.");
 
             return ((Rect)positionProperty.GetValue(mainWindow, null));
-        }
-        private static Type[] GetAllDerivedTypes(this AppDomain aAppDomain, Type aType)
-        {
-            return TypeCache.GetTypesDerivedFrom(aType).ToArray();
+#endif
         }
     }
 }
