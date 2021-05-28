@@ -43,7 +43,7 @@ namespace DATools
         }
 
 
-#if UNITY_2020_1_OR_NEWER
+#if !UNITY_2020_1_OR_NEWER
         private static UnityEngine.Object mainWindow = null;
 
         private static Type[] GetAllDerivedTypes(this AppDomain aAppDomain, Type aType)
