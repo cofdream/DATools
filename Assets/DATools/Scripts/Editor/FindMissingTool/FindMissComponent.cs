@@ -31,7 +31,7 @@ namespace DATools
             // 寻找指定对象的脚本
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label(new GUIContent("Target", "Target in Need to find the target GameObject of the miss components"));
+                GUILayout.Label(new GUIContent("Target"));
                 needFindGameObject = EditorGUILayout.ObjectField(needFindGameObject, typeof(GameObject), true) as GameObject;
 
                 GUI.enabled = needFindGameObject != null;
@@ -97,8 +97,6 @@ namespace DATools
                 GUILayout.EndScrollView();
             }
         }
-
-
 
         static void FindMissComponents(GameObject target, List<GameObject> missingGameObjects)
         {

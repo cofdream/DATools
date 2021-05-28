@@ -74,6 +74,5 @@ namespace DATools
         {
             return TypeCache.GetTypesDerivedFrom(aType).ToArray();
         }
-
     }
 }
