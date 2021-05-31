@@ -81,6 +81,20 @@ namespace DATools
                     GUILayout.BeginVertical("box");
                     {
                         tool.OpenState = GUILayout.Toggle(tool.OpenState, tool.Tool.ToolName, EditorStyles.foldout);
+
+                        GUILayout.BeginHorizontal();
+                        {
+                            tool.OpenState = GUILayout.Toggle(tool.OpenState, tool.Tool.ToolName, EditorStyles.foldout);
+
+                            GUILayout.FlexibleSpace();
+                            if (GUILayout.Button(EditorGUIUtility.FindTexture("d__Help"), (GUIStyle)"IconButton"))
+                            {
+                                // todo URL
+                                //System.Diagnostics.Process.Start("");
+                            }
+                        }
+                        GUILayout.EndHorizontal();
+
                         if (tool.OpenState)
                         {
                             GUILayout.Space(5);
@@ -88,6 +102,8 @@ namespace DATools
                         }
                     }
                     GUILayout.EndVertical();
+
+
                 }
                 GUILayout.FlexibleSpace();
             }
