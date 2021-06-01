@@ -4,9 +4,9 @@
     {
         string ToolName { get; }
         void Awake();
-        void OnDestroy();
         void OnEnable();
-        void OnDisable();
         void OnGUI();
+        void OnDisable();
+        void OnDestroy();
     }
 }
