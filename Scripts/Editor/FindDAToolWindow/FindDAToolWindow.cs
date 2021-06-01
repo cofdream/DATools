@@ -13,7 +13,8 @@ namespace DATools
         static void OpenWindow()
         {
             var window = GetWindow<FindDAToolWindow>();
-            window.position = EditorWindowExtension.GetMainWindowCenteredPosition(new Vector2(300, 600));
+            window.position = EditorWindowExtension.GetMainWindowCenteredPosition(new Vector2(400, 600));
+            window.minSize = new Vector2(300,200);
             window.Show();
         }
 
@@ -33,10 +34,12 @@ namespace DATools
         private void OnGUI()
         {
             if (allSearchDataList == null) LoadAttributes();
-
-            GUILayout.BeginHorizontal(GUI.skin.FindStyle("Toolbar"));
+           
+            GUILayout.BeginHorizontal(EditorStyles.toolbar);
             {
-                Rect rect = GUILayoutUtility.GetRect(0, this.maxSize.x, 18, 18, EditorStyles.toolbarSearchField, GUILayout.MinWidth(60));
+                GUILayout.FlexibleSpace();
+
+                Rect rect = GUILayoutUtility.GetRect(0, 300, 18, 18, EditorStyles.toolbarSearchField);
 
                 var temp_SearchFilter = searchFilter;
                 searchFilter = GUIExpand.DrawSearchField(rect, searchFilter);
