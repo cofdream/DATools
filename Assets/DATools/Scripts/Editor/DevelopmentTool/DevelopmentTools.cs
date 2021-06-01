@@ -24,11 +24,11 @@ namespace DATools
         {
             LoadTool();
 
-            UnityEditor.Compilation.CompilationPipeline.compilationStarted += AA;
+            UnityEditor.Compilation.CompilationPipeline.compilationStarted += CompilationStartedCallBack;
         }
         private void OnDisable()
         {
-            UnityEditor.Compilation.CompilationPipeline.compilationStarted -= AA;
+            UnityEditor.Compilation.CompilationPipeline.compilationStarted -= CompilationStartedCallBack;
             if (developementTools != null)
             {
                 foreach (var tool in developementTools)
@@ -168,7 +168,7 @@ namespace DATools
 
             developementTools = null;
         }
-        private void AA(object @object)
+        private void CompilationStartedCallBack(object @object)
         {
             if (developementTools != null)
             {
@@ -176,7 +176,7 @@ namespace DATools
             }
         }
 
-        private class UIDevelopmentToolCell
+        public class UIDevelopmentToolCell
         {
             public IDevelopementTool Tool;
             public bool OpenState;
