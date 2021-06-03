@@ -24,11 +24,11 @@ namespace DATools
         {
             LoadTool();
 
-            UnityEditor.Compilation.CompilationPipeline.compilationStarted += AA;
+            UnityEditor.Compilation.CompilationPipeline.compilationStarted += CompilationStartedCallBack;
         }
         private void OnDisable()
         {
-            UnityEditor.Compilation.CompilationPipeline.compilationStarted -= AA;
+            UnityEditor.Compilation.CompilationPipeline.compilationStarted -= CompilationStartedCallBack;
             if (developementTools != null)
             {
                 foreach (var tool in developementTools)
@@ -81,6 +81,20 @@ namespace DATools
                     GUILayout.BeginVertical("box");
                     {
                         tool.OpenState = GUILayout.Toggle(tool.OpenState, tool.Tool.ToolName, EditorStyles.foldout);
+
+                        GUILayout.BeginHorizontal();
+                        {
+                            tool.OpenState = GUILayout.Toggle(tool.OpenState, tool.Tool.ToolName, EditorStyles.foldout);
+
+                            GUILayout.FlexibleSpace();
+                            if (GUILayout.Button(EditorGUIUtility.FindTexture("d__Help"), (GUIStyle)"IconButton"))
+                            {
+                                // todo URL
+                                //System.Diagnostics.Process.Start("");
+                            }
+                        }
+                        GUILayout.EndHorizontal();
+
                         if (tool.OpenState)
                         {
                             GUILayout.Space(5);
@@ -88,6 +102,8 @@ namespace DATools
                         }
                     }
                     GUILayout.EndVertical();
+
+
                 }
                 GUILayout.FlexibleSpace();
             }
@@ -152,7 +168,7 @@ namespace DATools
 
             developementTools = null;
         }
-        private void AA(object @object)
+        private void CompilationStartedCallBack(object @object)
         {
             if (developementTools != null)
             {
@@ -160,7 +176,7 @@ namespace DATools
             }
         }
 
-        private class UIDevelopmentToolCell
+        public class UIDevelopmentToolCell
         {
             public IDevelopementTool Tool;
             public bool OpenState;
