@@ -34,4 +34,19 @@ namespace DATools
             }
         }
     }
+
+    public interface IDATool
+    {
+        string ToolName { get; }
+
+        void Awake();
+        void OnEnable();
+        void OnGUI();
+        void OnDisable();
+        void OnDestroy();
+    }
+    public interface ICreateDATool<T>
+    {
+        T CreateInstance();
+    }
 }
