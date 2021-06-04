@@ -172,7 +172,22 @@ namespace DATools
                                 CopyText("EditorGUIUtility.FindTexture( \"" + texture.name + "\" )");
 
                             Rect textureRect = GUILayoutUtility.GetRect(texture.width, texture.width, texture.height, texture.height, GUILayout.ExpandHeight(false), GUILayout.ExpandWidth(false));
-                            EditorGUI.DrawTextureTransparent(textureRect, texture);
+
+                            // EditorGUI.DrawTextureTransparent(textureRect, texture);
+
+                            try
+                            {
+                                EditorGUI.DrawTextureTransparent(textureRect, texture);
+                            }
+                            catch (Exception e)
+                            {
+                                throw e;
+                            }
+                            finally
+                            {
+                                Debug.LogWarning(texture.name);
+                            }
+
                         };
 
                         x += width + 8.0f;
