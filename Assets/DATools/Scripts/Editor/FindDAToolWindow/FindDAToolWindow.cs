@@ -106,6 +106,7 @@ namespace DATools
 
             if (GUI.changed)
             {
+                GUI.changed = false;
                 base.Repaint();
             }
         }
