@@ -3,6 +3,7 @@ using UnityEditor;
 
 namespace DATools
 {
+    // 切割视图
     public struct GUISplitData
     {
         public Vector2 ViewPosition;
@@ -222,7 +223,7 @@ namespace DATools
                 }
             }
 
-           
+
         }
 
         //todo Check GUISplitData 的范围，保证在窗口内
