@@ -26,8 +26,6 @@ namespace DATools
         public void Awake()
         {
             selectHVMode = true;
-            serializedObject = new SerializedObject(this);
-            dataHVGUIContent = new GUIContent("排列对象");
             spacing = 0;
         }
         public void OnDestroy()
@@ -38,6 +36,8 @@ namespace DATools
         }
         public void OnEnable()
         {
+            serializedObject = new SerializedObject(this);
+            dataHVGUIContent = new GUIContent("排列对象");
             serializedProperty = serializedObject.FindProperty("dataHV");
         }
         public void OnDisable()

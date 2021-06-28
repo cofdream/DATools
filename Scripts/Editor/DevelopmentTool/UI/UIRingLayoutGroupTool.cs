@@ -38,13 +38,14 @@ namespace DATools
         {
             ringSelectMode = true;
             ringData = null;
-            serializedObjectRing = new SerializedObject(this);
+
             ringDataGUIContent = new GUIContent("排列对象");
             serializedPropertyRing = null;
             radius = 50;
         }
         public void OnEnable()
         {
+            serializedObjectRing = new SerializedObject(this);
             serializedPropertyRing = serializedObjectRing.FindProperty("ringData");
         }
         public void OnDisable()
