@@ -36,8 +36,6 @@ namespace DATools
         {
             scrollViewPosition = Vector2.zero;
 
-            serializedObject = new SerializedObject(this);
-
             sameItems = null;
             isPriorityRootPosition = true;
             rootDatas = null;
@@ -51,6 +49,8 @@ namespace DATools
         }
         public virtual void OnEnable()
         {
+            serializedObject = new SerializedObject(this);
+
             serializedPropertySameItem = serializedObject.FindProperty("sameItems");
             serializedPropertyIsPriorityRootPosition = serializedObject.FindProperty("rootDatas");
             serializedPropertyRootData = serializedObject.FindProperty("isPriorityRootPosition");
