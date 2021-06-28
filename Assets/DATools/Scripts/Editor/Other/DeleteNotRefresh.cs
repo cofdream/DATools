@@ -10,7 +10,7 @@ namespace DATools
         [MenuItem("Assets/Delete Not Refresh")]
         private static void Delete()
         {
-            var paths = Utils.GetSelectionPath();
+            var paths = Utils.GetSelectionObjectPaths();
 
             string content = string.Empty;
             int length = paths.Length;
@@ -56,7 +56,7 @@ namespace DATools
         [MenuItem("Assets/Delete Not Refresh", true)]
         private static bool IsDelete()
         {
-            var paths = Utils.GetSelectionPath();
+            var paths = Utils.GetSelectionObjectPaths();
             if (paths.Length == 0 || paths.Length != Selection.objects.Length)
             {
                 return false;

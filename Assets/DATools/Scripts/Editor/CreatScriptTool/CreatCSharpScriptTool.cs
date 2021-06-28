@@ -25,7 +25,7 @@ namespace DATools
         [MenuItem("Assets/Create/C# Scripts/New Class", false, 81)]
         private static void CreatNewClass()
         {
-            string pathName = Utils.GetSelectionFoldePath()[0] + "/" + DEFINE_CLASS_NAME;
+            string pathName = Utils.GetSelectionFoldePath() + "/" + DEFINE_CLASS_NAME;
             Texture2D icon = EditorGUIUtility.IconContent("cs Script Icon").image as Texture2D;
 
             var action = ScriptableObjectExpand.CreateInstanceOnly<CreateCSarpScriptAction>();
@@ -52,7 +52,7 @@ namespace DATools
         [MenuItem("Assets/Create/C# Scripts/New Editor", false, 81)]
         private static void CreateEditor()
         {
-            string pathName = Utils.GetSelectionFoldePath()[0] + "/" + DEFINE_EDITOR_NAME;
+            string pathName = Utils.GetSelectionFoldePath() + "/" + DEFINE_EDITOR_NAME;
             Texture2D icon = EditorGUIUtility.IconContent("cs Script Icon").image as Texture2D;
 
             var action = ScriptableObjectExpand.CreateInstanceOnly<CreateCSarpScriptAction>();
