@@ -4,10 +4,10 @@ namespace DATools
     public static class Utils
     {
         /// <summary>
-        /// 获取Project目录下选中对象的 文件夹 路径
+        /// 获取Project目录下选中对象的 文件夹 的路径
         /// </summary>
-        /// <returns></returns>
-        public static string[] GetSelectionFoldePath()
+        /// <returns>返回 文件夹 的路径数组</returns>
+        public static string[] GetSelectionFoldePaths()
         {
             var guids = UnityEditor.Selection.assetGUIDs;
             if (guids == null) return null;
@@ -25,10 +25,10 @@ namespace DATools
             return guids;
         }
         /// <summary>
-        /// 获取Project目录下选中对象的路径
+        /// 获取Project目录下选中的路径
         /// </summary>
-        /// <returns></returns>
-        public static string[] GetSelectionPath()
+        /// <returns>返回 文件夹 或 文件 的路径数组</returns>
+        public static string[] GetSelectionObjectPaths()
         {
             var guids = UnityEditor.Selection.assetGUIDs;
             if (guids == null) return null;
@@ -41,6 +41,34 @@ namespace DATools
             return guids;
         }
 
+        /// <summary>
+        /// 获取Project目录下选中对象的 文件夹 的路径
+        /// </summary>
+        /// <returns>返回 文件夹 的路径</returns>
+        public static string GetSelectionFoldePath()
+        {
+            var guids = UnityEditor.Selection.assetGUIDs;
+            if (guids == null) return null;
+
+            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+            if (System.IO.Directory.Exists(path) == false)
+            {
+                int index = path.LastIndexOf('/');
+                path = path.Substring(0, index);
+            }
+            return  path;
+        }
+        /// <summary>
+        /// 获取Project目录下选中的路径
+        /// </summary>
+        /// <returns>返回 文件夹 或 文件 的路径</returns>
+        public static string GetSelectionObjectPath()
+        {
+            var guids = UnityEditor.Selection.assetGUIDs;
+            if (guids == null) return null;
+
+            return UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+        }
 
         public static void OpenDirectory(string path, bool useCMD = true)
         {

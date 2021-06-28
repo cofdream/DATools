@@ -18,7 +18,7 @@ namespace DATools
         [MenuItem("Assets/Create/File", false, 101)]
         private static void CreateFile()
         {
-            string pathName = Utils.GetSelectionFoldePath()[0] + "/" + DEFINE_CLASS_NAME;
+            string pathName = Utils.GetSelectionFoldePath() + "/" + DEFINE_CLASS_NAME;
             Texture2D icon = EditorGUIUtility.IconContent("DefaultAsset Icon").image as Texture2D;
 
             var action = ScriptableObjectExpand.CreateInstanceOnly<CreateFileAction>();
