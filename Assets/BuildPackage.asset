@@ -19,7 +19,7 @@ MonoBehaviour:
     State: 1
     Message: 
   - Title: Build Package
-    Command: git tag v0.0.5 upm
+    Command: git tag v0.0.6 upm
     Info: 
     State: 1
     Message: 
@@ -29,12 +29,12 @@ MonoBehaviour:
     State: 1
     Message: 
   - Title: Build Package
-    Command: git tag -d v0.0.3
+    Command: git tag -d v0.0.5
     Info: 
     State: 1
     Message: 
   - Title: Build Package
-    Command: git push origin :refs/tags/v0.0.2
+    Command: git push origin :refs/tags/v0.0.5
     Info: 
     State: 1
     Message: 
